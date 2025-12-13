@@ -1,2 +1,2 @@
 # chesspong
-chess pong java
+chess pong java swing
