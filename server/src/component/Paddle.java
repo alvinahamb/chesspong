@@ -27,21 +27,40 @@ public class Paddle {
     public void setHeight(int height) { this.height = height; }
     public void setSpeed(int speed) { this.speed = speed; }
 
-    public void moveLeft(int boundaryWidth) {
-        x = Math.max(0, x - speed);
-        clampHorizontal(boundaryWidth);
+    public void moveLeft(int minX, int maxX) {
+        x = Math.max(minX, x - speed);
+        clampHorizontal(minX, maxX);
     }
 
-    public void moveRight(int boundaryWidth) {
-        x = Math.min(boundaryWidth - width, x + speed);
-        clampHorizontal(boundaryWidth);
+    public void moveRight(int minX, int maxX) {
+        x = Math.min(maxX, x + speed);
+        clampHorizontal(minX, maxX);
     }
 
-    private void clampHorizontal(int boundaryWidth) {
-        if (x < 0) {
-            x = 0;
-        } else if (x + width > boundaryWidth) {
-            x = Math.max(0, boundaryWidth - width);
+    private void clampHorizontal(int minX, int maxX) {
+        if (x < minX) {
+            x = minX;
+        } else if (x > maxX) {
+            x = maxX;
         }
     }
+
+    // celui qui suit la taille du chessboard 
+    // public void moveLeft(int boundaryWidth) {
+    //     x = Math.max(0, x - speed);
+    //     clampHorizontal(boundaryWidth);
+    // }
+
+    // public void moveRight(int boundaryWidth) {
+    //     x = Math.min(boundaryWidth - width, x + speed);
+    //     clampHorizontal(boundaryWidth);
+    // }
+
+    // private void clampHorizontal(int boundaryWidth) {
+    //     if (x < 0) {
+    //         x = 0;
+    //     } else if (x + width > boundaryWidth) {
+    //         x = Math.max(0, boundaryWidth - width);
+    //     }
+    // }
 }
