@@ -11,22 +11,38 @@ public class ChessBoard {
 	private final int rows;
 	private final int columns;
 	private final Piece[][] grid;
+	private final int x;
+	private final int y;
+	private final int width;
+	private final int height;
 
 	public ChessBoard() {
 		this(DEFAULT_ROWS, DEFAULT_COLUMNS);
 	}
 
 	public ChessBoard(int rows, int columns) {
+		this(0, 0, 400, 400, rows, columns);
+	}
+
+	public ChessBoard(int x, int y, int width, int height, int rows, int columns) {
 		if (rows <= 0 || columns <= 0) {
 			throw new IllegalArgumentException("Board dimensions must be positive");
 		}
 		this.rows = rows;
 		this.columns = columns;
 		this.grid = new Piece[rows][columns];
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
 	}
 
 	public int getRows() { return rows; }
 	public int getColumns() { return columns; }
+	public int getX() { return x; }
+	public int getY() { return y; }
+	public int getWidth() { return width; }
+	public int getHeight() { return height; }
 
 	public boolean isInside(int x, int y) {
 		return x >= 0 && x < columns && y >= 0 && y < rows;

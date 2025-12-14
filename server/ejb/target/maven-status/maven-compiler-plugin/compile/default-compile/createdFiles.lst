@@ -1,0 +1,7 @@
+com\chesspong\config\ejb\ConfigServiceRemote.class
+com\chesspong\config\dto\ConfigDTO.class
+com\chesspong\config\repository\ConfigRepository.class
+com\chesspong\config\rest\RestApplication.class
+com\chesspong\config\rest\ConfigResource.class
+com\chesspong\config\entity\Config.class
+com\chesspong\config\ejb\ConfigService.class
