@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import network.ClientConnection;
 import component.Game;
-import com.chesspong.config.dto.ConfigDTO;
-import com.chesspong.config.ejb.ConfigServiceRemote;
+// import com.chesspong.config.dto.ConfigDTO;
+// import com.chesspong.config.ejb.ConfigServiceRemote;
 import javax.naming.InitialContext;
 import javax.naming.Context;
 import java.util.Hashtable;
@@ -25,7 +25,7 @@ public class Choice extends JFrame {
     private ClientConnection conn;
     private Game game;
     private Timer updateTimer;
-    private ConfigServiceRemote configService;
+    // private ConfigServiceRemote configService;
 
     public Choice() {
         setTitle("ChessPong Client");
@@ -39,8 +39,8 @@ public class Choice extends JFrame {
             jndiProperties.put(Context.PROVIDER_URL, "http-remoting://localhost:8080");
             jndiProperties.put("jboss.naming.client.ejb.context", "true");
             
-            InitialContext ctx = new InitialContext(jndiProperties);
-            configService = (ConfigServiceRemote) ctx.lookup("ejb:/config/ConfigService!com.chesspong.config.ejb.ConfigServiceRemote");
+            // InitialContext ctx = new InitialContext(jndiProperties);
+            // configService = (ConfigServiceRemote) ctx.lookup("ejb:/config/ConfigService!com.chesspong.config.ejb.ConfigServiceRemote");
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Failed to connect to config server: " + e.getMessage());
@@ -107,11 +107,13 @@ public class Choice extends JFrame {
     public void enterGame(String choice) {
         try {
             // Get piece_number from database
-            ConfigDTO lastConfig = configService.getLast();
-            int pieceNumber = (lastConfig != null) ? lastConfig.getPieceNumber() : 8; // default to 8 if no config
+            // ConfigDTO lastConfig = configService.getLast();
+            // int pieceNumber = (lastConfig != null) ? lastConfig.getPieceNumber() : 8; // default to 8 if no config
+            int pieceNumber = Integer.parseInt(choice);
             
             log("Entering game with " + pieceNumber + " pieces from database");
             conn.sendLine("ENTER_GAME " + pieceNumber);
+            
             String response = conn.readLine();
             log("Server -> " + response);
             if (response.startsWith("GAME_INITIALIZED ")) {

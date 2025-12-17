@@ -138,6 +138,45 @@ public class Server implements Closeable {
                     writer.println("GAME_STATE " + game.getGameState());
                 } else if (line.equals("GET_STATE")) {
                     writer.println("GAME_STATE " + game.getGameState());
+                } else if (line.startsWith("SAVE_CONFIG ")) {
+                    // Expected format: SAVE_CONFIG roi dame tour fou cavalier pion ballDegats pieceNumber
+                    try {
+                        String[] parts = line.split(" ");
+                        if (parts.length < 9) {
+                            writer.println("ERROR Invalid SAVE_CONFIG format");
+                        } else {
+                            int roi = Integer.parseInt(parts[1]);
+                            int dame = Integer.parseInt(parts[2]);
+                            int tour = Integer.parseInt(parts[3]);
+                            int fou = Integer.parseInt(parts[4]);
+                            int cavalier = Integer.parseInt(parts[5]);
+                            int pion = Integer.parseInt(parts[6]);
+                            int ballDegats = Integer.parseInt(parts[7]);
+                            int pieceNumber = Integer.parseInt(parts[8]);
+                            ConfigDTO dto = new ConfigDTO(0, roi, dame, tour, fou, cavalier, pion, ballDegats, pieceNumber);
+                            try {
+                                configService.create(dto);
+                                // refresh local config
+                                config = configService.getLast();
+                                writer.println("OK Config saved");
+                            } catch (Exception ex) {
+                                writer.println("ERROR Saving config: " + ex.getMessage());
+                            }
+                        }
+                    } catch (NumberFormatException ex) {
+                        writer.println("ERROR Invalid numbers in SAVE_CONFIG");
+                    }
+                } else if (line.equals("LOAD_CONFIG")) {
+                    try {
+                        ConfigDTO last = configService.getLast();
+                        if (last != null) {
+                            writer.println("CONFIG " + last.getRoi() + " " + last.getDame() + " " + last.getTour() + " " + last.getFou() + " " + last.getCavalier() + " " + last.getPion() + " " + last.getBallDegats() + " " + last.getPieceNumber());
+                        } else {
+                            writer.println("ERROR No config");
+                        }
+                    } catch (Exception ex) {
+                        writer.println("ERROR Loading config: " + ex.getMessage());
+                    }
                 } else {
                     writer.println("ECHO " + line);
                 }
