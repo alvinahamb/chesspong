@@ -16,3 +16,6 @@ if not exist out mkdir out
 @REM mvn compile
 javac -d out src\network\*.java src\component\*.java  src\ui\*.java
 java -cp out Main.App
+
+javac -d out src\network\*.java src\component\*.java
+java -cp out network.App
