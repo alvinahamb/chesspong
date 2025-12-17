@@ -8,7 +8,7 @@
     <artifactId>config</artifactId>
     <version>1.0-SNAPSHOT</version>
     <!-- ⚙️ Passe de war → ejb -->
-    <packaging>ejb</packaging>
+    <packaging>war</packaging>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

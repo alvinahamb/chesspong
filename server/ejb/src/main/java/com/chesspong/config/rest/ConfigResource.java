@@ -38,6 +38,17 @@ public class ConfigResource {
         return configService.getAll();
     }
 
+    @GET
+    @Path("/getLast")
+    public Response getLast() {
+        ConfigDTO config = configService.getLast();
+        if (config != null) {
+            return Response.ok(config).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+
     @PUT
     @Path("/{id}")
     public Response update(@PathParam("id") int id, ConfigDTO config) {
@@ -57,3 +68,4 @@ public class ConfigResource {
         }
     }
 }
+

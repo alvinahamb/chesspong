@@ -30,19 +30,19 @@ public class Piece {
     public void setLives(int lives) { this.lives = lives; }
     public void setActualLives(int actualLives) { this.actualLives = actualLives; }
 
-    public boolean loseLife() {
-        if (actualLives <= 0) {
-            return false;
-        }
-        actualLives -= 1;
-        return actualLives > 0;
-    }
+    // public boolean loseLife() {
+    //     if (actualLives <= 0) {
+    //         return false;
+    //     }
+    //     actualLives -= 1;
+    //     return actualLives > 0;
+    // }
 
-    public boolean isAlive() {
-        return actualLives > 0;
-    }
+    // public boolean isAlive() {
+    //     return actualLives > 0;
+    // }
 
-    public void resetLives() {
-        actualLives = lives;
-    }
+    // public void resetLives() {
+    //     actualLives = lives;
+    // }
 }
