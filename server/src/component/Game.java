@@ -68,6 +68,7 @@ public class Game {
 			int ballTop = ball.getY() - ball.getRadius();
 			int ballBottom = ball.getY() + ball.getRadius();
 			if (ballRight >= left && ballLeft <= right && ballBottom >= top && ballTop <= bottom) {
+				// degat de balle 
 				int damage = ball.getDegat();
 				piece.setActualLives(piece.getActualLives() - damage);
 				ball.bounceVertically();

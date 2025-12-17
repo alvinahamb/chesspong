@@ -25,26 +25,26 @@ public class Player {
     public void setPieces(List<Piece> pieces) { this.pieces = pieces; }
     public void setPaddle(Paddle paddle) { this.paddle = paddle; }
 
-    public void addPiece(Piece piece) {
-        if (piece != null) {
-            pieces.add(piece);
-        }
-    }
+    // public void addPiece(Piece piece) {
+    //     if (piece != null) {
+    //         pieces.add(piece);
+    //     }
+    // }
 
-    public boolean removePiece(Piece piece) {
-        if (piece == null) {
-            return false;
-        }
-        return pieces.remove(piece);
-    }
+    // public boolean removePiece(Piece piece) {
+    //     if (piece == null) {
+    //         return false;
+    //     }
+    //     return pieces.remove(piece);
+    // }
 
-    public int remainingPieces() {
-        int count = 0;
-        for (Piece piece : pieces) {
-            if (piece.isAlive()) {
-                count++;
-            }
-        }
-        return count;
-    }
+    // public int remainingPieces() {
+    //     int count = 0;
+    //     for (Piece piece : pieces) {
+    //         if (piece.isAlive()) {
+    //             count++;
+    //         }
+    //     }
+    //     return count;
+    // }
 }
