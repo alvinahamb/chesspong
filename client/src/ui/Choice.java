@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import network.ClientConnection;
 import component.Game;
-import com.chesspong.config.dto.ConfigDTO;
-import com.chesspong.config.ejb.ConfigServiceRemote;
+// import com.chesspong.config.dto.ConfigDTO;
+// import com.chesspong.config.ejb.ConfigServiceRemote;
 import javax.naming.InitialContext;
 import javax.naming.Context;
 import java.util.Hashtable;
@@ -25,7 +25,7 @@ public class Choice extends JFrame {
     private ClientConnection conn;
     private Game game;
     private Timer updateTimer;
-    private ConfigServiceRemote configService;
+    // private ConfigServiceRemote configService;
 
     public Choice() {
         setTitle("ChessPong Client");
@@ -39,8 +39,8 @@ public class Choice extends JFrame {
             jndiProperties.put(Context.PROVIDER_URL, "http-remoting://localhost:8080");
             jndiProperties.put("jboss.naming.client.ejb.context", "true");
             
-            InitialContext ctx = new InitialContext(jndiProperties);
-            configService = (ConfigServiceRemote) ctx.lookup("ejb:/config/ConfigService!com.chesspong.config.ejb.ConfigServiceRemote");
+            // InitialContext ctx = new InitialContext(jndiProperties);
+            // configService = (ConfigServiceRemote) ctx.lookup("ejb:/config/ConfigService!com.chesspong.config.ejb.ConfigServiceRemote");
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Failed to connect to config server: " + e.getMessage());
