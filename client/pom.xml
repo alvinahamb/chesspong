@@ -17,27 +17,13 @@
     </properties>
 
     <dependencies>
-        <!-- Jakarta EE APIs (fourni par WildFly, donc scope=provided) -->
-        <dependency>
-            <groupId>jakarta.platform</groupId>
-            <artifactId>jakarta.jakartaee-api</artifactId>
-            <version>${jakartaee.version}</version>
-            <scope>compile</scope>
-        </dependency>
-
         <!-- Driver PostgreSQL -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.6.0</version>
         </dependency>
-
-        <!-- WildFly client for remote EJB lookup -->
-        <dependency>
-            <groupId>org.wildfly</groupId>
-            <artifactId>wildfly-client-all</artifactId>
-            <version>27.0.0.Final</version>
-        </dependency>
+        <!-- WildFly client removed: client no longer uses remote EJB lookups -->
     </dependencies>
 
     <build>

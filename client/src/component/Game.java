@@ -17,6 +17,7 @@ public class Game {
     private List<PieceData> pieces = new ArrayList<>();
     private GamePanel panel;
     private Set<Integer> columnsWithPieces = new HashSet<>();
+    private Set<Integer> initialColumnsWithPieces = new HashSet<>();
 
     public Game() {
         panel = new GamePanel();
@@ -58,6 +59,9 @@ public class Game {
                 pieces.add(pd);
                 columnsWithPieces.add(pd.x);
             }
+        }
+        if (initialColumnsWithPieces.isEmpty() && !columnsWithPieces.isEmpty()) {
+            initialColumnsWithPieces.addAll(columnsWithPieces);
         }
     }
 
@@ -126,7 +130,7 @@ public class Game {
             // Draw chessboard only in columns with pieces
             for (int row = 0; row < 8; row++) {
                 for (int col = 0; col < 8; col++) {
-                    if (columnsWithPieces.contains(col)) {
+                    if (initialColumnsWithPieces.contains(col)) {
                         int x = col * squareSize;
                         int y = row * squareSize;
                         Color color = (row + col) % 2 == 0 ? Color.WHITE : Color.BLACK;

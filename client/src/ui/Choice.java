@@ -107,11 +107,13 @@ public class Choice extends JFrame {
     public void enterGame(String choice) {
         try {
             // Get piece_number from database
-            ConfigDTO lastConfig = configService.getLast();
-            int pieceNumber = (lastConfig != null) ? lastConfig.getPieceNumber() : 8; // default to 8 if no config
+            // ConfigDTO lastConfig = configService.getLast();
+            // int pieceNumber = (lastConfig != null) ? lastConfig.getPieceNumber() : 8; // default to 8 if no config
+            int pieceNumber = Integer.parseInt(choice);
             
             log("Entering game with " + pieceNumber + " pieces from database");
             conn.sendLine("ENTER_GAME " + pieceNumber);
+            
             String response = conn.readLine();
             log("Server -> " + response);
             if (response.startsWith("GAME_INITIALIZED ")) {
