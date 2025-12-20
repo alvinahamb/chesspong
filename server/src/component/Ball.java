@@ -8,6 +8,7 @@ public class Ball {
     int dx;
     int dy;
     int degat;
+    int initialDegat;
 
     public Ball(int x, int y, int radius, int speed, int degat) {
         this.x = x;
@@ -26,6 +27,7 @@ public class Ball {
     public int getDx() { return dx; }
     public int getDy() { return dy; }
     public int getDegat() { return degat; }
+    public int getInitialDegat() { return initialDegat; }
 
     public void setX(int x) { this.x = x; }
     public void setY(int y) { this.y = y; }
@@ -34,6 +36,7 @@ public class Ball {
     public void setDx(int dx) { this.dx = dx; }
     public void setDy(int dy) { this.dy = dy; }
     public void setDegat(int degat) { this.degat = degat; }
+    public void setInitialDegat(int initialDegat) { this.initialDegat = initialDegat; }
 
     public void move() {
         x += dx;

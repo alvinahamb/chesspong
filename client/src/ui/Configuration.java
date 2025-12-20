@@ -16,6 +16,8 @@ public class Configuration extends JFrame {
     private JTextField tourField;
     private JTextField pionField;
     private JTextField degatField;
+    private JTextField pouvoirBallField;
+    private JTextField atteintePouvoirField;
     private JTextField nombrePieceField;
     private JButton okButton;
     private JButton loadButton;
@@ -25,7 +27,7 @@ public class Configuration extends JFrame {
         setSize(600, 600);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        JPanel panel = new JPanel(new GridLayout(11, 2, 10, 10));
+        JPanel panel = new JPanel(new GridLayout(13, 2, 10, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         // IP input
@@ -67,6 +69,16 @@ public class Configuration extends JFrame {
         panel.add(new JLabel("Degat de balle:"));
         degatField = new JTextField();
         panel.add(degatField);
+
+        // Pouvoir ball
+        panel.add(new JLabel("Pouvoir ball:"));
+        pouvoirBallField = new JTextField();
+        panel.add(pouvoirBallField);
+
+        // Atteinte pouvoir
+        panel.add(new JLabel("Atteinte pouvoir:"));
+        atteintePouvoirField = new JTextField();
+        panel.add(atteintePouvoirField);
 
         // Nombre de piece
         panel.add(new JLabel("Nombre de piece:"));
@@ -110,6 +122,8 @@ public class Configuration extends JFrame {
             int cavalier = Integer.parseInt(cavalierField.getText());
             int pion = Integer.parseInt(pionField.getText());
             int ballDegats = Integer.parseInt(degatField.getText());
+            int pouvoirBall = Integer.parseInt(pouvoirBallField.getText());
+            int atteintePouvoir = Integer.parseInt(atteintePouvoirField.getText());
             int pieceNumber = Integer.parseInt(nombrePieceField.getText());
 
             String host = ipField.getText().isEmpty() ? "127.0.0.1" : ipField.getText();
@@ -118,7 +132,7 @@ public class Configuration extends JFrame {
                 conn.connect();
                 // read welcome
                 try { conn.readLine(); } catch (Exception ignored) {}
-                String cmd = String.format("SAVE_CONFIG %d %d %d %d %d %d %d %d", roi, dame, tour, fou, cavalier, pion, ballDegats, pieceNumber);
+                String cmd = String.format("SAVE_CONFIG %d %d %d %d %d %d %d %d %d %d", roi, dame, tour, fou, cavalier, pion, ballDegats, pouvoirBall, atteintePouvoir, pieceNumber);
                 conn.sendLine(cmd);
                 String resp = conn.readLine();
                 if (resp != null && resp.startsWith("OK")) {
@@ -152,7 +166,7 @@ public class Configuration extends JFrame {
             }
             if (resp.startsWith("CONFIG ")) {
                 String[] parts = resp.split(" ");
-                if (parts.length >= 9) {
+                if (parts.length >= 11) {
                     roiField.setText(parts[1]);
                     reineField.setText(parts[2]);
                     tourField.setText(parts[3]);
@@ -160,7 +174,9 @@ public class Configuration extends JFrame {
                     cavalierField.setText(parts[5]);
                     pionField.setText(parts[6]);
                     degatField.setText(parts[7]);
-                    nombrePieceField.setText(parts[8]);
+                    pouvoirBallField.setText(parts[8]);
+                    atteintePouvoirField.setText(parts[9]);
+                    nombrePieceField.setText(parts[10]);
                     JOptionPane.showMessageDialog(this, "Configuration loaded from server.");
                 } else {
                     JOptionPane.showMessageDialog(this, "Malformed CONFIG response.");

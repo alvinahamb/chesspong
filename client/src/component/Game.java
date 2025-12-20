@@ -13,6 +13,11 @@ public class Game {
 
     private int fieldWidth, fieldHeight;
     private int ballX, ballY, ballRadius;
+    private int pouvoirBall = 0;
+    private int pouvoirBallEnCours = 0;
+    private int atteintePouvoir = 0;
+    private int progressPouvoir = 0;
+    private boolean estAtteint = false;
     private List<int[]> paddles = new ArrayList<>();
     private List<PieceData> pieces = new ArrayList<>();
     private GamePanel panel;
@@ -58,6 +63,21 @@ public class Game {
                 pd.actualLives = Integer.parseInt(pParts[5]);
                 pieces.add(pd);
                 columnsWithPieces.add(pd.x);
+            }
+        }
+        // parse pouvoir info if present (server appends after another '|')
+        if (parts.length > 2) {
+            try {
+                String[] powParts = parts[2].trim().split("\\s+");
+                if (powParts.length >= 5) {
+                    pouvoirBall = Integer.parseInt(powParts[0]);
+                    pouvoirBallEnCours = Integer.parseInt(powParts[1]);
+                    atteintePouvoir = Integer.parseInt(powParts[2]);
+                    progressPouvoir = Integer.parseInt(powParts[3]);
+                    estAtteint = Integer.parseInt(powParts[4]) != 0;
+                }
+            } catch (Exception ex) {
+                // ignore parse errors and keep defaults
             }
         }
         if (initialColumnsWithPieces.isEmpty() && !columnsWithPieces.isEmpty()) {
@@ -166,6 +186,30 @@ public class Game {
             // Draw field boundary
             g.setColor(Color.GREEN);
             g.drawRect(0, 0, fieldWidth - 1, fieldHeight - 1);
+
+            // Draw power progress bar and info (top-right)
+            int barWidth = 200;
+            int barHeight = 18;
+            int margin = 10;
+            int barX = Math.max(margin, fieldWidth - barWidth - margin);
+            int barY = margin;
+            // Background
+            g.setColor(Color.DARK_GRAY);
+            g.fillRect(barX, barY, barWidth, barHeight);
+            // Filled portion based on progressPouvoir / atteintePouvoir
+            int denom = Math.max(1, atteintePouvoir);
+            int fill = (int) (Math.max(0, Math.min(1.0, (double) progressPouvoir / denom)) * barWidth);
+            g.setColor(Color.GREEN);
+            g.fillRect(barX, barY, fill, barHeight);
+            // Border
+            g.setColor(Color.BLACK);
+            g.drawRect(barX, barY, barWidth, barHeight);
+            // Text info below bar
+            g.setColor(Color.WHITE);
+            String line1 = "Pouvoir: " + pouvoirBall + "  EnCours: " + pouvoirBallEnCours;
+            String line2 = "Progress: " + progressPouvoir + "/" + atteintePouvoir + "  Atteint: " + (estAtteint ? "Oui" : "Non");
+            g.drawString(line1, barX, barY + barHeight + 15);
+            g.drawString(line2, barX, barY + barHeight + 30);
         }
 
         private ImageIcon getPieceIcon(String type, String color) {
