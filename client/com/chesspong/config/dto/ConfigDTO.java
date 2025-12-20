@@ -12,12 +12,14 @@ public class ConfigDTO implements Serializable {
     private int cavalier;
     private int pion;
     private int ballDegats;
+    private int pouvoirBall;
+    private int atteintePouvoir;
     private int pieceNumber;
 
     public ConfigDTO() {
     }
 
-    public ConfigDTO(int id, int roi, int dame, int tour, int fou, int cavalier, int pion, int ballDegats, int pieceNumber) {
+    public ConfigDTO(int id, int roi, int dame, int tour, int fou, int cavalier, int pion, int ballDegats, int pouvoirBall, int atteintePouvoir, int pieceNumber) {
         this.id = id;
         this.roi = roi;
         this.dame = dame;
@@ -26,6 +28,8 @@ public class ConfigDTO implements Serializable {
         this.cavalier = cavalier;
         this.pion = pion;
         this.ballDegats = ballDegats;
+        this.pouvoirBall = pouvoirBall;
+        this.atteintePouvoir = atteintePouvoir;
         this.pieceNumber = pieceNumber;
     }
 
@@ -92,6 +96,22 @@ public class ConfigDTO implements Serializable {
 
     public void setBallDegats(int ballDegats) {
         this.ballDegats = ballDegats;
+    }
+
+    public int getPouvoirBall() {
+        return pouvoirBall;
+    }
+
+    public void setPouvoirBall(int pouvoirBall) {
+        this.pouvoirBall = pouvoirBall;
+    }
+
+    public int getAtteintePouvoir() {
+        return atteintePouvoir;
+    }
+
+    public void setAtteintePouvoir(int atteintePouvoir) {
+        this.atteintePouvoir = atteintePouvoir;
     }
 
     public int getPieceNumber() {

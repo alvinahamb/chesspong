@@ -30,6 +30,8 @@ public class ConfigService implements ConfigServiceRemote {
         dto.setCavalier(config.getCavalier());
         dto.setPion(config.getPion());
         dto.setBallDegats(config.getBallDegats());
+        dto.setPouvoirBall(config.getPouvoirBall());
+        dto.setAtteintePouvoir(config.getAtteintePouvoir());
         dto.setPieceNumber(config.getPieceNumber());
         return dto;
     }
@@ -52,6 +54,8 @@ public class ConfigService implements ConfigServiceRemote {
         config.setCavalier(dto.getCavalier());
         config.setPion(dto.getPion());
         config.setBallDegats(dto.getBallDegats());
+        config.setPouvoirBall(dto.getPouvoirBall());
+        config.setAtteintePouvoir(dto.getAtteintePouvoir());
         config.setPieceNumber(dto.getPieceNumber());
         return config;
     }

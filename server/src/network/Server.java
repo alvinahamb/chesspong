@@ -55,14 +55,14 @@ public class Server implements Closeable {
             config = configService.getLast();
             if (config == null) {
                 System.err.println("No config found, using defaults");
-                // Set default config
-                config = new ConfigDTO(0, 6, 5, 2, 4, 3, 1, 1, 8); // roi, dame, tour, fou, cavalier, pion, ballDegats, pieceNumber
+                // Set default config (roi, dame, tour, fou, cavalier, pion, ballDegats, pouvoirBall, atteintePouvoir, pieceNumber)
+                config = new ConfigDTO(0, 6, 5, 2, 4, 3, 1, 1, 3, 5, 8);
             }
         } catch (Exception e) {
             System.err.println("Failed to lookup EJB: " + e.getMessage());
             e.printStackTrace();
-            // Use default config
-            config = new ConfigDTO(0, 6, 5, 2, 4, 3, 1, 1, 8);
+            // Use default config (roi,dame,tour,fou,cavalier,pion,ballDegats,pouvoirBall,atteintePouvoir,pieceNumber)
+            config = new ConfigDTO(0, 6, 5, 2, 4, 3, 1, 1, 3, 5, 8);
         }
 
         executor.execute(this::acceptLoop);
@@ -139,21 +139,23 @@ public class Server implements Closeable {
                 } else if (line.equals("GET_STATE")) {
                     writer.println("GAME_STATE " + game.getGameState());
                 } else if (line.startsWith("SAVE_CONFIG ")) {
-                    // Expected format: SAVE_CONFIG roi dame tour fou cavalier pion ballDegats pieceNumber
+                    // Expected format: SAVE_CONFIG roi dame tour fou cavalier pion ballDegats pouvoirBall atteintePouvoir pieceNumber
                     try {
                         String[] parts = line.split(" ");
-                        if (parts.length < 9) {
-                            writer.println("ERROR Invalid SAVE_CONFIG format");
-                        } else {
-                            int roi = Integer.parseInt(parts[1]);
-                            int dame = Integer.parseInt(parts[2]);
-                            int tour = Integer.parseInt(parts[3]);
-                            int fou = Integer.parseInt(parts[4]);
-                            int cavalier = Integer.parseInt(parts[5]);
-                            int pion = Integer.parseInt(parts[6]);
-                            int ballDegats = Integer.parseInt(parts[7]);
-                            int pieceNumber = Integer.parseInt(parts[8]);
-                            ConfigDTO dto = new ConfigDTO(0, roi, dame, tour, fou, cavalier, pion, ballDegats, pieceNumber);
+                            if (parts.length < 11) {
+                                writer.println("ERROR Invalid SAVE_CONFIG format");
+                            } else {
+                                int roi = Integer.parseInt(parts[1]);
+                                int dame = Integer.parseInt(parts[2]);
+                                int tour = Integer.parseInt(parts[3]);
+                                int fou = Integer.parseInt(parts[4]);
+                                int cavalier = Integer.parseInt(parts[5]);
+                                int pion = Integer.parseInt(parts[6]);
+                                int ballDegats = Integer.parseInt(parts[7]);
+                                int pouvoirBall = Integer.parseInt(parts[8]);
+                                int atteintePouvoir = Integer.parseInt(parts[9]);
+                                int pieceNumber = Integer.parseInt(parts[10]);
+                                ConfigDTO dto = new ConfigDTO(0, roi, dame, tour, fou, cavalier, pion, ballDegats, pouvoirBall, atteintePouvoir, pieceNumber);
                             try {
                                 configService.create(dto);
                                 // refresh local config
@@ -170,7 +172,7 @@ public class Server implements Closeable {
                     try {
                         ConfigDTO last = configService.getLast();
                         if (last != null) {
-                            writer.println("CONFIG " + last.getRoi() + " " + last.getDame() + " " + last.getTour() + " " + last.getFou() + " " + last.getCavalier() + " " + last.getPion() + " " + last.getBallDegats() + " " + last.getPieceNumber());
+                            writer.println("CONFIG " + last.getRoi() + " " + last.getDame() + " " + last.getTour() + " " + last.getFou() + " " + last.getCavalier() + " " + last.getPion() + " " + last.getBallDegats() + " " + last.getPouvoirBall() + " " + last.getAtteintePouvoir() + " " + last.getPieceNumber());
                         } else {
                             writer.println("ERROR No config");
                         }
@@ -218,6 +220,8 @@ public class Server implements Closeable {
 
     private Game initializeGame() {
         int numPieces = config.getPieceNumber();
+        int pouvoirBall = config.getPouvoirBall();
+        int atteintePouvoir = config.getAtteintePouvoir();
         int fieldWidth = 600;
         int fieldHeight = 600;
         int rows = 8;
@@ -286,7 +290,7 @@ public class Server implements Closeable {
             Player player = new Player(i, "Player" + (i+1), playerPieces, paddle);
             players.add(player);
         }
-        return new Game(fieldWidth, fieldHeight, board, ball, players);
+        return new Game(fieldWidth, fieldHeight, board, ball, players, pouvoirBall, atteintePouvoir);
     }
 
     @Override

@@ -31,6 +31,12 @@ public class Config {
     @Column(name = "ball_degats", nullable = false)
     private int ballDegats;
 
+    @Column(name = "pouvoir_ball", nullable = false)
+    private int pouvoirBall;
+
+    @Column(name = "atteinte_pouvoir", nullable = false)
+    private int atteintePouvoir;
+
     @Column(name = "piece_number", nullable = false)
     private int pieceNumber;
 
@@ -97,6 +103,22 @@ public class Config {
 
     public void setBallDegats(int ballDegats) {
         this.ballDegats = ballDegats;
+    }
+
+    public int getPouvoirBall() {
+        return pouvoirBall;
+    }
+
+    public void setPouvoirBall(int pouvoirBall) {
+        this.pouvoirBall = pouvoirBall;
+    }
+
+    public int getAtteintePouvoir() {
+        return atteintePouvoir;
+    }
+
+    public void setAtteintePouvoir(int atteintePouvoir) {
+        this.atteintePouvoir = atteintePouvoir;
     }
 
     public int getPieceNumber() {
